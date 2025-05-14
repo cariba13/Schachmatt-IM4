@@ -1,68 +1,69 @@
 <?php
- /*************************************************************
- * Daten als JSON-String vom Formular sender.html (später vom MC) serverseitig empfangen und Daten in die Datenbank einfügen
- * Datenbank-Verbindung
- * Lade diese Datei NICHT auf GitHub
- *************************************************************/
-
-
 require_once("db_config.php");
-echo "This script receives HTTP POST messages and pushes their content into the database.";
+date_default_timezone_set("Europe/Zurich");
 
-
-###################################### connect to db
-
-try{
-    $pdo = new PDO($dsn, $db_user, $db_pass, $options); 
-    echo "</br> DB Verbindung ist erfolgreich";
-}
-catch(PDOException $e){
+try {
+    $pdo = new PDO($dsn, $db_user, $db_pass, $options);
+    echo "DB Verbindung erfolgreich<br>";
+} catch (PDOException $e) {
     error_log("DB Error: " . $e->getMessage());
     echo json_encode(["status" => "error", "message" => "DB connection failed"]);
+    exit;
 }
 
+// Eingehende JSON-Daten lesen
+$inputJSON = file_get_contents('php://input');
+$input = json_decode($inputJSON, true);
 
+if (json_last_error() !== JSON_ERROR_NONE || empty($input)) {
+    echo json_encode(["status" => "error", "message" => "Invalid JSON input"]);
+    exit;
+}
 
+// Eingabewerte extrahieren
+$columns = ['nfc', 'licht', 'distanz', 'rotary'];
+$updateFields = [];
+$updateValues = [];
 
-###################################### Empfangen der JSON-Daten
+// Dynamisch nur die Spalten hinzufügen, die Werte haben
+foreach ($columns as $column) {
+    if (isset($input[$column])) {
+        $updateFields[] = "$column = ?";
+        $updateValues[] = $input[$column];
+    }
+}
 
-$inputJSON = file_get_contents('php://input'); // JSON-Daten aus dem Body der Anfrage
-$input = json_decode($inputJSON, true); // Dekodieren der JSON-Daten in ein Array
-
-
-
-
-###################################### Prüfen, ob die JSON-Daten erfolgreich dekodiert wurden
-### folgender Block nicht zwingend notwendig, nur für Troubleshooting: Die rohen JSON-Daten in die Tabelle receiveddata einfügen
-
-// if (json_last_error() === JSON_ERROR_NONE && !empty($input)) {
-//     $sql = "INSERT INTO receiveddata (msg) VALUES (?)";
-//     $stmt = $pdo->prepare($sql);
-//     $stmt->execute([$inputJSON]);
-// }
-
-// echo "</br></br> Zeig die letzten 5 empfangenen HTTP Requests";
-// $sql = "SELECT * FROM receiveddata ORDER BY id DESC LIMIT 5";
-// $stmt = $pdo->prepare($sql);
-// $stmt->execute();
-// $receiveddata = $stmt->fetchAll();
-
-// echo "<ul>";
-// foreach ($receiveddata as $data) {
-//     echo "<li>" . $data['msg'] . "</li>";
-// }
-// echo "</ul>";
-
-
-###################################### receiving a post request from a HTML form, later from ESP32 C6
-
-$wert    = isset($input["wert"])    ? $input["wert"]    : null;
-$licht   = isset($input["licht"])   ? $input["licht"]   : null;
-$distanz = isset($input["distanz"]) ? $input["distanz"] : null;
-$rotary  = isset($input["rotary"])  ? $input["rotary"]  : null;
-$nfc     = isset($input["nfc"])     ? $input["nfc"]     : null;
-$sql = "INSERT INTO nfcdata (wert, licht, distanz, rotary, nfc) VALUES (?, ?, ?, ?, ?)";
+// Letzten Datensatz holen
+$sql = "SELECT * FROM Schachdaten ORDER BY id DESC LIMIT 1";
 $stmt = $pdo->prepare($sql);
-$stmt->execute([$wert, $licht, $distanz, $rotary, $nfc]);
+$stmt->execute();
+$lastRow = $stmt->fetch(PDO::FETCH_ASSOC);
 
+// Zeit vergleichen
+$now = new DateTime();
+$lastTime = isset($lastRow['zeit']) && !empty($lastRow['zeit']) ? DateTime::createFromFormat('Y-m-d H:i:s', $lastRow['zeit']) : null;
+$intervalSeconds = $lastTime instanceof DateTime ? $now->getTimestamp() - $lastTime->getTimestamp() : PHP_INT_MAX;
+
+// Entscheidung: Update oder Insert
+if (!$lastRow || $intervalSeconds > 900) { // 15 Minuten = 900 Sekunden
+    // Neue Zeile einfügen
+    $sql = "INSERT INTO Schachdaten (" . implode(", ", $columns) . ", zeit) VALUES (" . implode(", ", array_fill(0, count($columns), "?")) . ", NOW())";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute(array_map(fn($col) => $input[$col] ?? null, $columns));
+    echo "Neue Zeile eingefügt.";
+} else {
+    // Nur die geänderten Spalten aktualisieren
+    if (!empty($updateFields)) {
+        $updateFields[] = "zeit = NOW()"; // Zeit immer aktualisieren
+        $updateValues[] = $lastRow['id']; // ID für WHERE-Klausel
+        $sql = "UPDATE Schachdaten SET " . implode(", ", $updateFields) . " WHERE id = ?";
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute($updateValues);
+        echo "Letzte Zeile aktualisiert.";
+    } else {
+        echo "Keine Änderungen vorgenommen.";
+    }
+}
 ?>
+
+trait_exists
