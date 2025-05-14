@@ -65,5 +65,3 @@ if (!$lastRow || $intervalSeconds > 900) { // 15 Minuten = 900 Sekunden
     }
 }
 ?>
-
-trait_exists
