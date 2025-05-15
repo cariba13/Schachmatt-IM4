@@ -52,3 +52,27 @@ Hardware-Setup
 |------------------|-----------------|
 | Rotary Encoder A | GPIO 2 (ENC_A)  |
 | Rotary Encoder B | GPIO 3 (ENC_B)  |
+
+
+
+
+für im body vom index.html
+
+<div id="status-icon">⏳ Lade...</div>
+
+<script>
+function checkStatus() {
+  fetch("php/status_check.php")
+    .then(res => res.json())
+    .then(data => {
+      document.getElementById("status-icon").textContent = data.ok ? "✅ Erfüllt" : "❌ Noch offen";
+    })
+    .catch(() => {
+      document.getElementById("status-icon").textContent = "⚠️ Fehler";
+    });
+}
+
+// beim Laden + alle 10 Sekunden erneut prüfen
+checkStatus();
+setInterval(checkStatus, 10000);
+</script>
