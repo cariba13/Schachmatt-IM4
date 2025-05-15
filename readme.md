@@ -58,21 +58,34 @@ Hardware-Setup
 
 für im body vom index.html
 
-<div id="status-icon">⏳ Lade...</div>
-
 <script>
-function checkStatus() {
-  fetch("php/status_check.php")
-    .then(res => res.json())
-    .then(data => {
-      document.getElementById("status-icon").textContent = data.ok ? "✅ Erfüllt" : "❌ Noch offen";
-    })
-    .catch(() => {
-      document.getElementById("status-icon").textContent = "⚠️ Fehler";
-    });
-}
+  async function checkStatus() {
+    const res = await fetch('php/status_check.php');
+    const data = await res.json();
 
-// beim Laden + alle 10 Sekunden erneut prüfen
-checkStatus();
-setInterval(checkStatus, 10000);
+    if (data.error) {
+      console.error(data.error);
+      return;
+    }
+
+    document.querySelector("#licht span").innerHTML = data.licht === 1
+      ? "<span class='ok'>✔</span>"
+      : "<span class='nok'>✖</span>";
+
+    document.querySelector("#distanz span").innerHTML = (data.distanz >= 0 && data.distanz < 200)
+      ? "<span class='ok'>✔</span>"
+      : "<span class='nok'>✖</span>";
+
+    document.querySelector("#nfc span").innerHTML = data.nfc
+      ? "<span class='ok'>✔</span>"
+      : "<span class='nok'>✖</span>";
+
+    document.querySelector("#rotary span").innerHTML = (data.rotary >= 9 && data.rotary <= 11)
+      ? "<span class='ok'>✔</span>"
+      : "<span class='nok'>✖</span>";
+  }
+
+  setInterval(checkStatus, 5000);
+  checkStatus();
 </script>
+

@@ -1,20 +1,24 @@
 <?php
-require_once 'db_config.php';
+require_once("php/db_config.php");
+header('Content-Type: application/json');
 
-$sql = "SELECT * FROM daten ORDER BY timestamp DESC LIMIT 1"; // ggf. Tabellennamen anpassen
-$result = $conn->query($sql);
+try {
+    $pdo = new PDO($dsn, $db_user, $db_pass, $options);
+    $stmt = $pdo->query("SELECT * FROM Schachdaten ORDER BY id DESC LIMIT 1");
+    $data = $stmt->fetch(PDO::FETCH_ASSOC);
 
-if ($result && $row = $result->fetch_assoc()) {
-    $licht = $row['licht'];
-    $distanz = $row['distanz'];
-    $nfc = $row['nfc'] ?? ''; // optional, falls vorhanden
+    if ($data) {
+        echo json_encode([
+            "licht" => $data["licht"],
+            "distanz" => $data["distanz"],
+            "nfc" => $data["nfc"],
+            "rotary" => $data["rotary"]
+        ]);
+    } else {
+        echo json_encode(["error" => "Keine Daten gefunden"]);
+    }
 
-    $status = ($licht == 1 && $distanz < 100); // deine Bedingungen
-
-    echo json_encode(['ok' => $status]);
-} else {
-    echo json_encode(['ok' => false]);
+} catch (PDOException $e) {
+    echo json_encode(["error" => "DB Fehler: " . $e->getMessage()]);
 }
-
-$conn->close();
 ?>
