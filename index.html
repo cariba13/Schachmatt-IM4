@@ -5,60 +5,119 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Schachrätsel</title>
   <link rel="stylesheet" href="style.css">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <!-- Optionaler Webfont-Fallback -->
-  <link href="https://fonts.googleapis.com/css2?family=Fira+Sans&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Futura+PT&display=swap" rel="stylesheet"> <!-- Falls Futura PT nicht lokal -->
 </head>
 <body>
-
   <header>
-    <h1>Schachrätsel</h1>
+    <h1>Schachmatt</h1>
   </header>
 
-  <main>
-    <button class="puzzle-button">
-      <img src="assets/figur1.png" alt="Springer" class="icon">
-      <div>
-        <strong>Rätsel 1</strong><br>
-        <span>Das hohe Ross</span>
-      </div>
-    </button>
+  <!-- ... -->
+<main>
+<div class="button-container">
+    <a href="html/raetsel1.html">
+        <button id="rotary" class="puzzle-button">
+            <div class="text">
+                <strong>Rätsel 1: </strong>Hohes Ross <span class="status-icon"></span>
+            </div>
+            <img src="/Assets/Springer.png" alt="Springer">
+        </button>
+    </a>
 
-    <button class="puzzle-button">
-      <img src="assets/figur2.png" alt="Läufer" class="icon">
-      <div>
-        <strong>Rätsel 2</strong><br>
-        <span>Lauf, Lauf, Lauf</span>
-      </div>
-    </button>
+    <a href="html/raetsel2.html">
+        <button id="licht" class="puzzle-button">
+            <div class="text">
+                <strong>Rätsel 2: </strong>Lauf, lauf, lauf <span class="status-icon"></span>
+            </div>
+            <img src="Assets/Laeufer.png" alt="Laeufer">
+        </button>
+    </a>
 
-    <button class="puzzle-button">
-      <img src="assets/figur3.png" alt="Bauer" class="icon">
-      <div>
-        <strong>Rätsel 3</strong><br>
-        <span>Das Bauernopfer</span>
-      </div>
-    </button>
+    <a href="html/raetsel3.html">
+        <button id="nfc" class="puzzle-button">
+            <div class="text">
+                <strong>Rätsel 3: </strong>Bauernopfer <span class="status-icon"></span>
+            </div>
+            <img src="Assets/Bauer.png" alt="Bauer">
+        </button>
+    </a>
 
-    <button class="puzzle-button">
-      <img src="assets/figur4.png" alt="Turm" class="icon">
-      <div>
-        <strong>Rätsel 4</strong><br>
-        <span>Der Aussichtsturm</span>
-      </div>
-    </button>
-  </main>
+    <a href="html/raetsel4.html">
+        <button id="distanz" class="puzzle-button">
+            <div class="text">
+                <strong>Rätsel 4: </strong>Aussichtsturm <span class="status-icon"></span>
+            </div>
+            <img src="Assets/Turm.png" alt="Turm">
+        </button>
+    </a>
+</div>
+  </div>
+</main>
 
   <footer>
-    <div class="progress">
-      <span class="dot"></span>
-      <span class="dot"></span>
-      <span class="dot"></span>
-      <span class="dot"></span>
+    <div class="status">
+      <div class="circle"></div>
+      <div class="circle"></div>
+      <div class="circle"></div>
+      <div class="circle"></div>
     </div>
-    <button class="cache-button" disabled>Cache öffnen</button>
   </footer>
+
+<!-- Nur in index.html einfügen -->
+<div id="intro-overlay">
+  <div id="intro-content" class="intro-content">
+    <p>
+      Allegra!<br>
+      Um diesen Geocache zu öffnen, musst du zuerst eine Partie Schach gegen uns gewinnen. 
+      Löse die vier Rätsel, um an das Logbuch heranzukommen.<br><br>
+      Jede Challenge besteht aus einem digitalen Rätsel und einer physischen Eingabe der Lösung auf dem Spielfeld. 
+      Die eingegebene Lösung erscheint dann, wenn sie richtig ist, auch in den Kreisen. 
+      Erst mit dem richtigen Code ist der Weg zum Logbuch frei.
+    </p>
+    <button id="intro-close-btn">Schliessen</button>
+  </div>
+</div>
+
+
+
+
+<span id="code-numbers" style="display: none;">
+  <p class="code-message">
+    🎉 Gratulation, du hast alle Rätsel richtig gelöst!<br>
+    Gib nun den folgenden Code auf dem Zahlenschloss ein:
+  </p>
+  <span class="digit">3</span>
+  <span class="digit">7</span>
+  <span class="digit">5</span>
+  <span class="digit">2</span>
+</span>
+
+
+
+<script src="script.js"></script>
+<script>
+  window.addEventListener("load", () => {
+    const overlay = document.getElementById("intro-overlay");
+    const closeBtn = document.getElementById("intro-close-btn");
+
+    // Prüfen, ob das Overlay bereits gesehen wurde
+    const introSeen = localStorage.getItem("introSeen");
+
+    if (!introSeen) {
+      overlay.style.display = "flex"; // Nur anzeigen, wenn noch nicht gesehen
+
+      // Wenn Button geklickt → ausblenden & merken
+      closeBtn.addEventListener("click", () => {
+        overlay.style.display = "none";
+        localStorage.setItem("introSeen", "true");
+      });
+    } else {
+      overlay.style.display = "none"; // Sicherheitshalber erzwingen
+    }
+  });
+</script>
+
+
 
 </body>
 </html>

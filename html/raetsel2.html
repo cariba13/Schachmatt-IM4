@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rätsel 1 – Schachmatt</title>
+  <link rel="stylesheet" href="../style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Futura+PT&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <header>
+    <h1>Lauf, lauf, lauf</h1>
+  </header>
+
+  <main>
+    <section class="raetsel-box">
+      <h2>Rätsel 2:</h2>
+      <br>
+      <p class="raetsel-text">
+        <img src="../Assets/fhgr-logo.png" alt="FHGR Logo" class="raetsel-bild" />
+        <br>
+        Dieser Cache ist im Modul "Interaktive Medien" im Studiengang Multimedia Production an der Fachhochschule Graubünden entstanden. 
+        Das Logo der FHGR siehst du oben.<br>
+        Früher hiess die Institution noch HTW Chur, doch heute hebt vor allem das Fach die FHGR von anderen Hochschulen in Graubünden ab.
+        Der weisse Läufer würde auch gerne an diese Hochschule gehen. Er muss dafür das am besten zum Logo der FHGR passende Feld finden, 
+        darf sich aber nur den Regeln entsprechend bewegen.<br>
+      </p>
+
+      <button class="zurück-button" onclick="window.location.href='../index.html'">Zurück</button>
+    </section>
+  </main>
+
+<div id="popup" class="hidden">
+  <div class="popup-content">
+    <h2>🎉 Rätsel gelöst!🎉</h2>
+    <br>
+    <p>Super gemacht – du hast dieses Rätsel erfolgreich abgeschlossen.</p>
+    <br>
+    <button class="weiter-button" onclick="window.location.href='../index.html'">Weiter</button>
+  </div>
+</div>
+
+
+<script src="../JS/raetsel.js"></script>
+
+<script>
+  window.addEventListener("DOMContentLoaded", () => {
+    setInterval(checkLichtStatus, 1000); // Nur für Rätsel 1
+  });
+</script>
+
+</body>
+</html>
