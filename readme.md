@@ -25,7 +25,8 @@ In diesem Projekt entwickeln wir einen Geocache unter dem Motto Schachpartie, de
 ## Hardware-Setup und Code
 
 ### Lichtsensor
-Lorem Ipsum
+Grundlagen des Lichtsensors...
+Der Lichtsensor bereitete uns mehr Probleme wie wir ursprünglich gedacht hatten. Da wir unsere Sensoren unter einem Schachbrett verstecken, musste der Lichtsensor nochmal angepasst werden.
 
 ---
 
