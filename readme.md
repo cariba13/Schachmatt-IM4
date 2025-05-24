@@ -1,9 +1,3 @@
-NFC: ID Wert
-licht: 0=Hell 1=dunkel
-distanz: Zahl
-rotary: Zahl
-
-
 # PROJEKT DOKUMENTATION - SCHACHMATT
 
 ## Inhaltsverzeichnis
@@ -25,13 +19,12 @@ In diesem Projekt entwickeln wir einen Geocache unter dem Motto Schachpartie, de
 ## Hardware-Setup und Code
 
 ### Lichtsensor
-Grundlagen des Lichtsensors...
-Der Lichtsensor bereitete uns mehr Probleme wie wir ursprünglich gedacht hatten. Da wir unsere Sensoren unter einem Schachbrett verstecken, musste der Lichtsensor nochmal angepasst werden.
+Der Lichtsensor wurde gebraucht um einen Schachzug zu erkennen. Wenn eine Figur auf den Sensor gestellt wird, ändern sich die Lichtverhältnisse und der Lichtsensor überliefert andere Daten. Dabei brauchen wir nur zwei verschiedene Status also entweder Licht auf dem Sensor oder kein Licht (weniger Licht) auf dem Sensor. Die Daten werden in 0 (Licht) und 1 (kein Licht) angegeben. Zudem geht bei keinem licht das LED des ESP32 an. So konnten wir bei der Programmierung einfacher überprüfen welcher Status nun aktiv ist. Dies half uns vor allem beim Problem welches später noch beschrieben wird. Der Sensor war relativ schnell funktionstüchtig und sendete zuverlässig die Signale an die Datenbank. (Alle 5 Sekunden wird eine HTTP Anfrage an den Server geschickt.) Was wir nicht bedacht hatten. Da wir unsere Sensoren unter einem Schachbrett, also einem Blatt Papier verstecken, musste der Lichtsensor nochmal angepasst werden. Dafür veränderten wir den physischen Regler direkt am Sensor. Dies war ein heikles Unterfangen, da unter dem Papier der Unterschied zwischen Hell und Dunkel nochmal weniger ist. Unter dem Laminierten Blatt Papier brachte dies ein weiteres mal eine Herausforderung mit sich, welche wir aber schlussendlich lösen konnten.
 
 ---
 
 ### Distanzsensor
-Lorem Ipsum
+Der Distanzsensor ist ein wenig komplexer wie der Lichtsensor, da dort genaue Daten gesendet werden (von 0-250). Da der Sensor SDA und SCL braucht, konnten wir den Distanzsensor nicht am gleichen ESP32 anschliessen wie den NFC Reader, da das Board nur jeweils ein SDA und ein SCL Anschluss besitzt und der NFC Reader diese Anschlüsse auch braucht. Zum Glück hatten wir zwei ESP32 zur Verfügung. Der Distanzsensor gibt uns zuverlässig Daten heraus. Gemessen beziehungsweise gelesen werden die Daten ca. alle 0.5 Sekunden. Dies ist eine Vorsichtsmassnahme, weil der ESP32 sonst Probleme bekommt. Diese Daten werden alle 5 Sekunden an den Server gesendet und dort geupdatet wenn ein anderer Wert erkannt wird wie der, welcher schon in der Datenbank steht.
 
 ---
 
@@ -56,7 +49,5 @@ Hardware-Setup
 
 
 
-
-für im body vom index.html
 
 
