@@ -1,4 +1,6 @@
-/* Farben gemäss Design */
+/* ============================
+   Farbdefinitionen (Designfarben)
+============================ */
 :root {
   --hellgrau: #F2F2F2;
   --beige: #D9B596;
@@ -8,46 +10,10 @@
   --grün: #397734;
 }
 
-#intro-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  background: rgba(255, 255, 255, 0.95);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-}
 
-.intro-content {
-  background: white;
-  border: 5px solid var(--beige);
-  padding: 2rem;
-  border-radius: 20px;
-  max-width: 600px;
-  text-align: center;
-  font-size: 1.1rem;
-  box-shadow: 4px 4px 10px rgba(0,0,0,0.2);
-  margin-right: 5vw;
-  margin-left: 5vw;
-  margin-top: 5vh;
-  margin-bottom: 15vh;
-}
-
-#intro-close-btn {
-  margin-top: 1.5rem;
-  padding: 0.75rem 1.5rem;
-  font-size: 1rem;
-  background-color: var(--dunkelbraun);
-  color: white;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-}
-
-
+/* ============================
+   Allgemeine Grundstile
+============================ */
 * {
   margin: 0;
   padding: 0;
@@ -60,18 +26,48 @@ body {
   background: linear-gradient(to bottom, var(--dunkelbraun), var(--hellgrau));
   display: flex;
   flex-direction: column;
-  min-height: 90vh; /* Reduced height */
-
+  min-height: 90vh; /* Reduzierte Höhe */
 }
 
+
+/* ============================
+   Header-Bereich
+============================ */
 header {
   background-color: var(--dunkelbraun);
   color: white;
   text-align: center;
   padding: 1rem;
   border-bottom: 2px solid var(--hellbraun);
+  position: relative;
 }
 
+#info-button {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 40px;
+  height: 40px;
+  background-color: var(--beige);
+  color: var(--dunkelbraun);
+  border-radius: 50%;
+  font-weight: bold;
+  font-size: 1.5rem;
+  text-align: center;
+  line-height: 40px;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  transition: background-color 0.3s ease;
+}
+
+#info-button:hover {
+  background-color: var(--hellbraun);
+  color: white;
+}
+
+/* ============================
+   Hauptinhalt (Main Layout)
+============================ */
 main {
   flex: 1;
   display: flex;
@@ -79,6 +75,10 @@ main {
   align-items: center;
 }
 
+
+/* ============================
+   Button-Bereich (Startseite)
+============================ */
 .button-container {
   width: 100%;
   max-width: 400px;
@@ -112,12 +112,15 @@ main {
   font-size: clamp(1rem, 2.5vw, 1.5rem); /* Skalierbare Schriftgrösse */
 }
 
-
 .puzzle-button img {
   height: 60px;
   width: auto;
 }
 
+
+/* ============================
+   Button Icons (Hintergrundbilder)
+============================ */
 .button1 .button-img {
   background-image: url('Assets/Springer.png');
   background-size: contain;
@@ -147,6 +150,49 @@ main {
 }
 
 
+/* ============================
+   Intro-Overlay beim Start
+============================ */
+#intro-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(255, 255, 255, 0.95);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+}
+
+.intro-content {
+  background: white;
+  border: 5px solid var(--beige);
+  padding: 2rem;
+  border-radius: 20px;
+  max-width: 600px;
+  text-align: center;
+  font-size: 1.1rem;
+  box-shadow: 4px 4px 10px rgba(0,0,0,0.2);
+  margin: 5vh 5vw 15vh;
+}
+
+#intro-close-btn {
+  margin-top: 1.5rem;
+  padding: 0.75rem 1.5rem;
+  font-size: 1rem;
+  background-color: var(--dunkelbraun);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+
+/* ============================
+   Fussbereich (Footer)
+============================ */
 footer {
   background-color: var(--beige);
   padding: 1rem;
@@ -171,10 +217,9 @@ footer {
   justify-content: center;
   font-weight: bold;
   font-size: 1rem;
-  color: transparent; /* Start: unsichtbar */
+  color: transparent;
   transition: background-color 0.3s ease, color 0.3s ease;
 }
-
 
 .status-icon {
   margin-left: 0.5rem;
@@ -189,8 +234,12 @@ footer {
   color: red;
 }
 
+
+/* ============================
+   Code-Anzeige (Popup mit Zahlen)
+============================ */
 #code-numbers {
-  display: none;  /* Standard: versteckt */
+  display: none;
   position: fixed;
   top: 50%;
   left: 50%;
@@ -218,7 +267,6 @@ footer {
   line-height: 1.4;
 }
 
-
 #code-numbers .digit {
   width: clamp(50px, 10vw, 100px);
   height: clamp(50px, 10vw, 100px);
@@ -235,11 +283,12 @@ footer {
 }
 
 
-/* ------------------ FÜR DIE RÄTSELSEITEN ------------------- */
-
+/* ============================
+   Rätselseiten (Allgemeines Layout)
+============================ */
 .raetsel-box {
-  width: 90%; /* nimmt max. 90% der Bildschirmbreite ein */
-  max-width: 600px; /* aber nie mehr als 600px */
+  width: 90%;
+  max-width: 600px;
   margin: 3rem auto;
   padding: 2rem;
   background-color: var(--beige, #f9f9f5);
@@ -249,32 +298,9 @@ footer {
   text-align: center;
 }
 
-
 .raetsel-text {
   font-size: 17px;
   margin-bottom: 2rem;
-}
-
-.zurück-button {
-  background-color: #397734;
-  color: #f2f2f2;
-  border: none;
-  padding: 0.8rem 1.5rem;
-  font-size: 1rem;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
-}
-
-.weiter-button {
-  background-color: var(--grün);
-  color: #f2f2f2;
-  border: none;
-  padding: 0.8rem 1.5rem;
-  font-size: 1rem;
-  border-radius: 0.5rem;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
 }
 
 .raetsel-bild {
@@ -284,6 +310,34 @@ footer {
   margin: 1rem 0;
 }
 
+
+/* ============================
+   Buttons auf Rätselseiten
+============================ */
+.zurück-button,
+.weiter-button {
+  border: none;
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.zurück-button {
+  background-color: #397734;
+  color: #f2f2f2;
+}
+
+.weiter-button {
+  background-color: var(--grün);
+  color: #f2f2f2;
+}
+
+
+/* ============================
+   Popups (z. B. am Ende)
+============================ */
 .popup-content {
   font-size: clamp(1rem, 15vw, 1.5rem);
   color: #333;
@@ -292,10 +346,6 @@ footer {
   padding: 2rem;
   border-radius: 1rem;
   text-align: center;
-}
-
-.hidden {
-  display: none;
 }
 
 .popupShow {
@@ -319,5 +369,6 @@ footer {
   text-align: center;
 }
 
-
-/* -------------------------------------------------------------- */
+.hidden {
+  display: none;
+}
