@@ -56,6 +56,10 @@ Hardware-Setup
 
 
 
-für im body vom index.html
+
+Merken für Carina:
+Erfolg pop ups noch auf die anderen Rätselseiten hinzufügen!!!!
+
+
 
 
