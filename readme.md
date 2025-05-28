@@ -7,7 +7,7 @@
 3. [Screenflow/Flussdiagramm](#Screenflow)
 4. [Steckplan](#Steckplan)  
 5. [Umsetzung](#Umsetzung)  
-6. [Anleitung zum Nachbauen](#Anleitung)  
+6. [Anleitung zum Nachbauen](#Anleitung-zum-Nachbauen)  
 
 
 ## Projektbeschreibung
