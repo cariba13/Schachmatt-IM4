@@ -10,7 +10,7 @@ async function checkStatus() {
 
 
     const statuses = {
-      rotary: data.rotary >= 9 && data.rotary <= 11,
+      rotary: Number.isInteger(data.rotary) && data.rotary >= 15 && data.rotary <= 19,
       licht: data.licht == 1,
       nfc: data.nfc === "FF0F53DE3F0000",
       distanz: data.distanz >= 0 && data.distanz < 75

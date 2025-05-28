@@ -21,15 +21,15 @@ function closePopup() {
   }
 }
 
-// === RÄTSEL 1: ROTARY – Wert zwischen 9 und 11 ===
+// === RÄTSEL 1: ROTARY – Wert zwischen 15 und 19 ===
 async function checkRotaryStatus() {
   const res = await fetch("../php/status_check.php");
   const data = await res.json();
   const rotary = data?.rotary;
   console.log("Rotary value:", rotary);
 
-  if (rotary >= 9 && rotary <= 11) {
-    console.log("Rotary in range (9-11)");
+  if (rotary >= 15 && rotary <= 19) {
+    console.log("Rotary in range (15-19)");
     showPopup();
   } else {
     console.log("Rotary out of range");
