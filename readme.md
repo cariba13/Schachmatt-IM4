@@ -126,6 +126,13 @@ Anfänglich war die Idee relativ schnell gegeben, dass wir ein Geocache machen w
 
 <br>
 
+**Known Bugs**
+
+Wir wissen, dass der Drehregler aufgrund seiner Hardware ziemlich limitiert ist. Dreht man ihn zu schnell überspringt er einzelne Zahlenwerte, wodurch die Skala verändert wird. Somit wird eine andere Zahl an die Datenbank gesendet obwohl die Position exakt die selbe ist wie ursrpünglich korrekt. Diesem Problem wollen wir durch eine textliche Hervorhebung lösen. Wir schreiben an das Ende des Rätsels einen klaren Hinweis, dass man die Figur nur langsam drehen darf. Dieser Hinweis ist mit einem Stern, einer fett gedruckten Semantik und der Farbe rot gekennzeichnet. Somit sollte für alle klar ersichtlich sein, dass dieser Text von hoher Wichtigkeit ist.
+
+
+<br>
+
 **Verworfene Lösungsansätze**
 
 Nicht alle Ideen welche wir ursprünglich hatten, waren schlussendlich auch umsetzbar und haben es in das finale Projekt geschafft. Ruhet in Frieden ihr Gedankenblitze, Designideen und kreativen Hirngespinste. Darunter war unter anderem der vorhin erwähnte Drehmotor oder auch die Idee alle Sensoren an einem einzigen ESP32 anzuhängen. Wir hatten auch die Idee in der Datenbank immer neue Einträge zu generieren, so dass überprüft werden muss ob jeweils der letzte Eintrag alle Bedingungen erfüllt. So hatten wir während dem testen am Anfang teilweise um die 300 Zeilen in unserer Datenbank und verloren auch ab und zu den Überblick. Die Daten als update in die Datenbank zu schreiben war hier die intelligentere und einfachere Lösung. Nun musste nur noch eine "Session" erstellt werden damit die Lösung beziehungsweise die falschen Lösungen nicht in der Webseite erhalten blieben. So wird nun bei 15 Minuten ohne neue Daten die Zeile nicht mehr geupdatet, sondern bei der nächsten Sensoränderung wird eine neue Zeile/Session erstellt.
