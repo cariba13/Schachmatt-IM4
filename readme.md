@@ -4,7 +4,7 @@
 
 1. [Projektbeschreibung](#Projektbeschreibung)
 2. [Hardware-Setup und Code](#hardware-setup-und-Code)
-3. [Screenflow/Flussdiagram](#Screenflow/Flussdiagramm)
+3. [Screenflow/Flussdiagramm](#Screenflow/Flussdiagramm)
 4. [Steckplan](#Steckplan)  
 5. [Kapitel 2](#Kapitel-2)  
 6. [Kapitel 3](#Kapitel-3)  
@@ -48,7 +48,7 @@ Hardware-Setup
 | Rotary Encoder B | GPIO 3 (ENC_B)  |
 
 
-## Screenflow/Flussdiagram
+## Screenflow/Flussdiagramm
 
 Vor der technischen Umsetzung des Projekts haben wir ein Screenflow des gesamten Projekts erstellt. Dieser ist im Figma ersichtlich https://www.figma.com/design/QBwLGvlgNTSYOOGi4WRb6m/IM4-MockUp?node-id=71-450&t=LwzLWQJTbZL3t7zy-1. Dieser Screenflow zeigt den ganzen Prozess auf, welcher durchlaufen wird damit alles richtig funktioniert und die richtige Logik hat.
 
