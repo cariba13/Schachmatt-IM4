@@ -24,7 +24,7 @@ In diesem Projekt entwickeln wir einen Geocache unter dem Motto Schachpartie, de
 
 1. Der Lichtsensor misst die Helligkeit auf dem Sensorfeld.
 2. Wird eine Figur auf das Feld gestellt, verändert sich die Lichtintensität (z. B. durch Abschattung).
-3. Der ESP32 interpretiert diesen Unterschied als binären Zustand (`0 = Licht vorhanden`, `1 = kein Licht`).
+3. Der ESP32 interpretiert diesen Unterschied als binären Zustand (0 = Licht vorhanden, 1 = kein Licht).
 4. Alle 5 Sekunden wird eine HTTP POST-Anfrage mit dem aktuellen Wert als JSON an den Server gesendet, sofern sich der Status verändert hat.
 
 **Hardware-Setup:**
@@ -43,7 +43,7 @@ Der Lichtsensor wurde gebraucht um einen Schachzug zu erkennen. Wenn eine Figur 
 **Funktionsweise:**
 
 1. Der Distanzsensor misst kontinuierlich den Abstand zwischen Sensor und Objekt (z. B. einer Figur).
-2. Der Wert liegt typischerweise zwischen `0` und `250 mm`.
+2. Der Wert liegt typischerweise zwischen 0 und 250 mm.
 3. Zur Performance-Optimierung wird der Sensor nur ca. alle 0.5 Sekunden ausgelesen.
 4. Alle 5 Sekunden wird der Wert per HTTP POST an den Server gesendet, falls sich der Wert gegenüber der Datenbank verändert hat.
 
@@ -65,7 +65,7 @@ Der Distanzsensor ist ein wenig komplexer wie der Lichtsensor, da dort genaue Da
 
 1. Der NFC-Reader prüft fortlaufend, ob ein NFC-Tag in Reichweite ist.
 2. Wird ein Tag erkannt, wird dessen eindeutige ID gelesen.
-3. Der ESP32 vergleicht die ID mit einer vordefinierten Referenz-ID (z. B. `FF0F53DE3F0000`).
+3. Der ESP32 vergleicht die ID mit einer vordefinierten Referenz-ID (z. B. FF0F53DE3F0000).
 4. Nur bei Übereinstimmung gilt das Rätsel als gelöst.
 5. Auch dieser Sensor überträgt den Status im 5-Sekunden-Takt an den Server.
 
@@ -85,7 +85,7 @@ Der NFC Reader benötigt wie auch der Distanzsensor ein SDA und ein SCL Anschlus
 
 Funktionsweise:
 1. Der Rotary Encoder wird via Interrupt abgefragt.
-2. Die Bewegung wird als relative Position (von 0 bis `NUM_POSITIONS - 1`) interpretiert.
+2. Die Bewegung wird als relative Position (von 0 bis NUM_POSITIONS - 1) interpretiert.
 3. Nach einer kurzen Stabilitätsverzögerung (5 Sekunden ohne weitere Bewegung) wird die Position via HTTP POST als JSON an den Server gesendet.
 
 Hardware-Setup
@@ -133,76 +133,78 @@ Speziell bei unserem Projekt ist die visuelle Gestaltung des Ganzen. Und dabei i
 
 ![Das Schachbrett während dem Arbeitsprozess](/Bilder%20für%20Dokumentation/arbeitsprozess.jpg)
 
-### Anleitung zum Nachbauen
+---
+
+## Anleitung zum Nachbauen
 
 Diese Anleitung beschreibt in vereinfachter Form, wie du das Schachrätsel-Webprojekt mit physischer Eingabe umsetzen kannst. Ziel ist es, physische Sensorwerte (z. B. NFC, Licht, Distanz) mit digitalen Rätseln auf einer Webseite zu kombinieren. Die Sensorwerte werden in einer Datenbank gespeichert und von der Webseite regelmässig überprüft.
 
 ---
 
-## 1. Vorbereitung der Datenbank
+### 1. Vorbereitung der Datenbank
 
 Erstelle in deiner MySQL-Datenbank zwei Tabellen:
 
-- **`Schachdaten`**: Für die Echtzeitwerte der Sensoren.
-- **`sensordata`**: Für allgemeine Tests mit Einfügen, Suchen und Löschen von Werten.
+**Schachdaten**: Für die Echtzeitwerte der Sensoren.
+**sensordata**: (optional) Für allgemeine Tests mit Einfügen, Suchen und Löschen von Werten.
 
-Beispielhafte Spalten für `Schachdaten`:
+Beispielhafte Spalten für Schachdaten:
 
-```sql
+sql
 id, nfc, licht, distanz, rotary, zeit
-```
+
 
 ---
 
-## 2. Zentrale PHP-Skripte
+**2. Zentrale PHP-Skripte**
 
-### `db_config.php`
+db_config.php
 Legt die Zugangsdaten für die Datenbankverbindung fest (DSN, Benutzername, Passwort, Optionen).
 
-### `load.php`
+load.php
 Dieses Skript wird vom ESP32 oder Raspberry Pi aufgerufen. Es:
 
 - Empfängt JSON-Daten mit den Sensorwerten.
 - Entscheidet, ob ein neuer Eintrag gemacht oder der letzte aktualisiert wird.
-- Speichert die Werte in die Datenbank `Schachdaten`.
+- Speichert die Werte in die Datenbank Schachdaten.
 
-### `status_check.php`
+### status_check.php
 Dieses Skript wird regelmässig von der Webseite aufgerufen. Es:
 
-- Holt den neuesten Eintrag aus `Schachdaten`.
+- Holt den neuesten Eintrag aus Schachdaten.
 - Gibt die Sensorwerte als JSON zurück.
 
 ---
 
 ## 3. Webseite: HTML & CSS
 
-### `index.html`
+### index.html
 Die Hauptseite mit vier Rätseln.
 
 - Zeigt Buttons mit Icons für jedes Rätsel.
 - Zeigt beim Start ein Overlay mit Einführungstext.
 - Bei gelösten Rätseln erscheint ein vierstelliger Code.
 
-### `style.css`
+### style.css
 Definiert das visuelle Design: Farben, Layouts, Buttons, Overlay.
 
 ---
 
 ## 4. Interaktivität: JavaScript
 
-### `script.js`
+### script.js
 Wird beim Laden der Seite gestartet.
 
-- Ruft regelmässig `status_check.php` auf.
+- Ruft regelmässig status_check.php auf.
 - Vergleicht die Sensorwerte mit den erwarteten Bedingungen.
 - Aktualisiert die Anzeige (✔/✖ + Farbkreis) bei jedem Button.
 - Wenn alle vier Rätsel korrekt gelöst sind, erscheint der Code.
 
 ---
 
-## 5. Zusatzseite: `website_form.php`
+## 5. Zusatzseite: website_form.php
 
-Eine einfache Testseite zur Interaktion mit der Datenbank `sensordata`.
+Eine einfache Testseite zur Interaktion mit der Datenbank sensordata.
 
 - Ermöglicht manuelles Einfügen, Löschen und Suchen von Werten.
 - Zeigt die Daten auch als JSON an.
@@ -242,8 +244,8 @@ Projektordner/
 
 ## 7. Hinweise
 
-- Die Sensorwerte müssen korrekt benannt sein (z. B. `"nfc"`, `"licht"`, `"distanz"`, `"rotary"`).
-- Alle Server-Skripte benötigen Zugriff auf `db_config.php`.
+- Die Sensorwerte müssen korrekt benannt sein (z. B. "nfc", "licht", "distanz", "rotary").
+- Alle Server-Skripte benötigen Zugriff auf db_config.php.
 - Achte auf korrekte JSON-Struktur beim Senden von Daten.
 - Regelmässige Datenbankabfragen durch das Frontend ermöglichen Live-Feedback.
 
