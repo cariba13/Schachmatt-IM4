@@ -5,9 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Rätsel 1 – Schachmatt</title>
   <link rel="stylesheet" href="../style.css" />
-  <link href="https://fonts.googleapis.com/css2?family=Futura+PT&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
 </head>
-<body>
+<body data-raetsel="2">
 
   <header>
     <h1>Lauf, lauf, lauf</h1>
@@ -33,7 +33,9 @@
 
 <div id="popup" class="hidden">
   <div class="popup-content">
-    <h2>🎉 Rätsel gelöst!🎉</h2>
+    <h2>🎉🎉🎉</h2>
+    <br>
+    <h2>Rätsel gelöst!</h2>
     <br>
     <p>Super gemacht – du hast dieses Rätsel erfolgreich abgeschlossen.</p>
     <br>
@@ -41,14 +43,23 @@
   </div>
 </div>
 
-
 <script src="../JS/raetsel.js"></script>
+<script src="../script.js"></script>
 
 <script>
   window.addEventListener("DOMContentLoaded", () => {
-    setInterval(checkLichtStatus, 1000); // Nur für Rätsel 1
+    setInterval(checkLichtStatus, 1000); 
   });
 </script>
+
+ <footer>
+    <div class="status">
+      <div class="circle"></div>
+      <div class="circle"></div>
+      <div class="circle"></div>
+      <div class="circle"></div>
+    </div>
+  </footer>
 
 </body>
 </html>

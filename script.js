@@ -9,8 +9,6 @@ async function checkStatus() {
     }
 
 
-
-
     const statuses = {
       rotary: data.rotary >= 9 && data.rotary <= 11,
       licht: data.licht == 1,
