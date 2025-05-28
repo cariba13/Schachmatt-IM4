@@ -148,6 +148,7 @@ Diese Anleitung beschreibt in vereinfachter Form, wie du das Schachrätsel-Webpr
 Erstelle in deiner MySQL-Datenbank zwei Tabellen:
 
 **Schachdaten**: Für die Echtzeitwerte der Sensoren.
+
 **sensordata**: (optional) Für allgemeine Tests mit Einfügen, Suchen und Löschen von Werten.
 
 Beispielhafte Spalten für Schachdaten:
@@ -160,21 +161,21 @@ id, nfc, licht, distanz, rotary, zeit
 
 ### 2. Zentrale PHP-Skripte
 
-db_config.php
+**db_config.php**
 Legt die Zugangsdaten für die Datenbankverbindung fest (DSN, Benutzername, Passwort, Optionen).
 
-load.php
+**load.php**
 Dieses Skript wird vom ESP32 oder Raspberry Pi aufgerufen. Es:
 
-- Empfängt JSON-Daten mit den Sensorwerten.
-- Entscheidet, ob ein neuer Eintrag gemacht oder der letzte aktualisiert wird.
-- Speichert die Werte in die Datenbank Schachdaten.
+ Empfängt JSON-Daten mit den Sensorwerten.
+ Entscheidet, ob ein neuer Eintrag gemacht oder der letzte aktualisiert wird.
+ Speichert die Werte in die Datenbank Schachdaten.
 
 **status_check.php**
 Dieses Skript wird regelmässig von der Webseite aufgerufen. Es:
 
-- Holt den neuesten Eintrag aus Schachdaten.
-- Gibt die Sensorwerte als JSON zurück.
+ Holt den neuesten Eintrag aus Schachdaten.
+ Gibt die Sensorwerte als JSON zurück.
 
 ---
 
@@ -183,38 +184,38 @@ Dieses Skript wird regelmässig von der Webseite aufgerufen. Es:
 **index.html**
 Die Hauptseite mit vier Rätseln.
 
-- Zeigt Buttons mit Icons für jedes Rätsel.
-- Zeigt beim Start ein Overlay mit Einführungstext.
-- Bei gelösten Rätseln erscheint ein vierstelliger Code.
+ Zeigt Buttons mit Icons für jedes Rätsel.
+ Zeigt beim Start ein Overlay mit Einführungstext.
+ Bei gelösten Rätseln erscheint ein vierstelliger Code.
 
 **style.css**
 Definiert das visuelle Design: Farben, Layouts, Buttons, Overlay.
 
 ---
 
-## 4. Interaktivität: JavaScript
+### 4. Interaktivität: JavaScript
 
-### script.js
+**script.js**
 Wird beim Laden der Seite gestartet.
 
-- Ruft regelmässig status_check.php auf.
-- Vergleicht die Sensorwerte mit den erwarteten Bedingungen.
-- Aktualisiert die Anzeige (✔/✖ + Farbkreis) bei jedem Button.
-- Wenn alle vier Rätsel korrekt gelöst sind, erscheint der Code.
+ Ruft regelmässig status_check.php auf.
+ Vergleicht die Sensorwerte mit den erwarteten Bedingungen.
+ Aktualisiert die Anzeige (✔/✖ + Farbkreis) bei jedem Button.
+ Wenn alle vier Rätsel korrekt gelöst sind, erscheint der Code.
 
 ---
 
-## 5. Zusatzseite: website_form.php
+### 5. Zusatzseite: website_form.php
 
 Eine einfache Testseite zur Interaktion mit der Datenbank sensordata.
 
-- Ermöglicht manuelles Einfügen, Löschen und Suchen von Werten.
-- Zeigt die Daten auch als JSON an.
-- Diese Seite dient zur Entwicklung und zum Debuggen.
+ Ermöglicht manuelles Einfügen, Löschen und Suchen von Werten.
+ Zeigt die Daten auch als JSON an.
+ Diese Seite dient zur Entwicklung und zum Debuggen.
 
 ---
 
-## 6. Projektstruktur (vereinfacht)
+### 6. Projektstruktur (vereinfacht)
 
 ```plaintext
 Projektordner/
@@ -244,12 +245,12 @@ Projektordner/
 
 ---
 
-## 7. Hinweise
+### 7. Hinweise
 
-- Die Sensorwerte müssen korrekt benannt sein (z. B. "nfc", "licht", "distanz", "rotary").
-- Alle Server-Skripte benötigen Zugriff auf db_config.php.
-- Achte auf korrekte JSON-Struktur beim Senden von Daten.
-- Regelmässige Datenbankabfragen durch das Frontend ermöglichen Live-Feedback.
+ Die Sensorwerte müssen korrekt benannt sein (z. B. "nfc", "licht", "distanz", "rotary").
+ Alle Server-Skripte benötigen Zugriff auf db_config.php.
+ Achte auf korrekte JSON-Struktur beim Senden von Daten.
+ Regelmässige Datenbankabfragen durch das Frontend ermöglichen Live-Feedback.
 
 
 
