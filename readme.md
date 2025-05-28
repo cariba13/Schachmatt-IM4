@@ -7,7 +7,7 @@
 3. [Screenflow/Flussdiagramm](#Screenflow)
 4. [Steckplan](#Steckplan)  
 5. [Umsetzung](#Umsetzung)  
-6. [Kapitel 3](#Kapitel-3)  
+6. [Anleitung zum Nachbauen](#Anleitung-zum-Nachbauen)  
 
 
 ## Projektbeschreibung
@@ -24,7 +24,7 @@ In diesem Projekt entwickeln wir einen Geocache unter dem Motto Schachpartie, de
 
 1. Der Lichtsensor misst die Helligkeit auf dem Sensorfeld.
 2. Wird eine Figur auf das Feld gestellt, verändert sich die Lichtintensität (z. B. durch Abschattung).
-3. Der ESP32 interpretiert diesen Unterschied als binären Zustand (`0 = Licht vorhanden`, `1 = kein Licht`).
+3. Der ESP32 interpretiert diesen Unterschied als binären Zustand (0 = Licht vorhanden, 1 = kein Licht).
 4. Alle 5 Sekunden wird eine HTTP POST-Anfrage mit dem aktuellen Wert als JSON an den Server gesendet, sofern sich der Status verändert hat.
 
 **Hardware-Setup:**
@@ -43,7 +43,7 @@ Der Lichtsensor wurde gebraucht um einen Schachzug zu erkennen. Wenn eine Figur 
 **Funktionsweise:**
 
 1. Der Distanzsensor misst kontinuierlich den Abstand zwischen Sensor und Objekt (z. B. einer Figur).
-2. Der Wert liegt typischerweise zwischen `0` und `250 mm`.
+2. Der Wert liegt typischerweise zwischen 0 und 250 mm.
 3. Zur Performance-Optimierung wird der Sensor nur ca. alle 0.5 Sekunden ausgelesen.
 4. Alle 5 Sekunden wird der Wert per HTTP POST an den Server gesendet, falls sich der Wert gegenüber der Datenbank verändert hat.
 
@@ -65,7 +65,7 @@ Der Distanzsensor ist ein wenig komplexer wie der Lichtsensor, da dort genaue Da
 
 1. Der NFC-Reader prüft fortlaufend, ob ein NFC-Tag in Reichweite ist.
 2. Wird ein Tag erkannt, wird dessen eindeutige ID gelesen.
-3. Der ESP32 vergleicht die ID mit einer vordefinierten Referenz-ID (z. B. `FF0F53DE3F0000`).
+3. Der ESP32 vergleicht die ID mit einer vordefinierten Referenz-ID (z. B. FF0F53DE3F0000).
 4. Nur bei Übereinstimmung gilt das Rätsel als gelöst.
 5. Auch dieser Sensor überträgt den Status im 5-Sekunden-Takt an den Server.
 
@@ -85,7 +85,7 @@ Der NFC Reader benötigt wie auch der Distanzsensor ein SDA und ein SCL Anschlus
 
 Funktionsweise:
 1. Der Rotary Encoder wird via Interrupt abgefragt.
-2. Die Bewegung wird als relative Position (von 0 bis `NUM_POSITIONS - 1`) interpretiert.
+2. Die Bewegung wird als relative Position (von 0 bis NUM_POSITIONS - 1) interpretiert.
 3. Nach einer kurzen Stabilitätsverzögerung (5 Sekunden ohne weitere Bewegung) wird die Position via HTTP POST als JSON an den Server gesendet.
 
 Hardware-Setup
@@ -123,15 +123,145 @@ Die ganze Verkabelung der Microcontroller mit den Sensoren stellte uns immer wie
 
 Anfänglich war die Idee relativ schnell gegeben, dass wir ein Geocache machen wollten. Auch die Idee von mehreren Sensoren für die Öffnung des Geocaches bestand ziemlich früh. Damals wollten wir zur Öffnung des Geocaches also des Logbuchs noch den Drehmotor verwenden. Diese Idee verwarfen wir jedoch, da wir mit den vier Sensoren schon genug zu tun hatten. Ausserdem würde es dann keinen Sinn mehr ergeben, wieso man aus den Rätseln Zahlen erhält. Die Idee die ganze Geschichte in der Thematik Schach zu gestalten, kam erst später aber verleiht dem Ganzen eine schöne vereinende Story. Wir erstellten eine Projektübersicht und ein Screenflow, wie alles funktionieren könnte. Danach kreierten wir ein Mockup für die Webseite, also wie diese aussehen könnte. Ein erstes ganz simples Design welches vor allem für die Usability gedacht war, wurde verworfen, beziehungsweise weiterentwickelt und designt. Dieses Design haben wir schlussendlich ziemlich genau so umgesetzt.
 
+
+<br>
+
 **Verworfene Lösungsansätze**
 
 Nicht alle Ideen welche wir ursprünglich hatten, waren schlussendlich auch umsetzbar und haben es in das finale Projekt geschafft. Ruhet in Frieden ihr Gedankenblitze, Designideen und kreativen Hirngespinste. Darunter war unter anderem der vorhin erwähnte Drehmotor oder auch die Idee alle Sensoren an einem einzigen ESP32 anzuhängen. Wir hatten auch die Idee in der Datenbank immer neue Einträge zu generieren, so dass überprüft werden muss ob jeweils der letzte Eintrag alle Bedingungen erfüllt. So hatten wir während dem testen am Anfang teilweise um die 300 Zeilen in unserer Datenbank und verloren auch ab und zu den Überblick. Die Daten als update in die Datenbank zu schreiben war hier die intelligentere und einfachere Lösung. Nun musste nur noch eine "Session" erstellt werden damit die Lösung beziehungsweise die falschen Lösungen nicht in der Webseite erhalten blieben. So wird nun bei 15 Minuten ohne neue Daten die Zeile nicht mehr geupdatet, sondern bei der nächsten Sensoränderung wird eine neue Zeile/Session erstellt.
+
+
+<br>
 
 **Design**
 
 Speziell bei unserem Projekt ist die visuelle Gestaltung des Ganzen. Und dabei ist nicht nur das digitale sondern vor allem auch das physische gemeint. Da wir ein Schachbrett mit eingebauten Sensoren und modifizierten Schachfiguren benötigen, kamen wir nicht um grosse Bastellstunden herum. (Was für uns auch kein Problem sondern eher Freude bedeutete.) Für einen ersten Prototypen der jedoch schon voll ausgestaltet ist und alle Details beachtet wurde, verwendeten wir eine Styroporplatte als Schachbrettunterlage und darüber ein ausgedrucktes Blatt. Dieses stellte uns vor die nächste Problematik, dass wir dann den Lichtsensor neu kalibrieren musste, da nun weniger Licht vorhanden war. Dies änderte sich nochmals als wir unser Blatt upgradeten und es laminierten. Dies machte das Ganze noch schöner und verlieh dem Schachspiel mit dem Glanz des Plastiks einen edleren Touch. Doch kein Idee wahrt lange und schon war das laminierte A3 Blatt, für welches wir extra die Bibliothek der FHGR kontaktierten und zu anderen Standorten fuhren schon wieder verworfen und durch ein Fliesschachbrett ersetzt. Dieses vereinfachte uns die Integration der anderen Sensoren.
 
 ![Das Schachbrett während dem Arbeitsprozess](/Bilder%20für%20Dokumentation/arbeitsprozess.jpg)
+
+
+<br>
+
+**Einsatz von KI**
+
+Wir bedanken uns an dieser Stelle ganz herzlich bei ChatGPT sprich OpenAi. Ohne diese KI wäre unser Projekt nie zu dem geworden was es heute ist. Ob beim Finden von Fehlern im Code oder auch beim Erklären von gewissen Funktionen und Abläufen konnten wir immer auf ChatGPT zurückgreifen. Auch für das Aufräumen des Codes war die KI sehr nützlich, da wir irgendwann die Übersicht verloren haben, da wir häufig den Code von ChatGPT adaptierten und modifizierten und 5 mal umbauten, so dass am Schluss genau das herauskam, was wir wollten. Jedoch halfen die direkte Hilfe von Jasper, Jan, Siro oder Beni meist effektiver und direkter. Die vier sind jedoch nicht so künstlich intelligent, sondern eher real intelligent. Ein grosses Danke nochmals für die Hilfe und Geduld welche sie immer für uns aufbringen. 
+---
+
+## Anleitung zum Nachbauen
+
+Diese Anleitung beschreibt in vereinfachter Form, wie du das Schachrätsel-Webprojekt mit physischer Eingabe umsetzen kannst. Ziel ist es, physische Sensorwerte (z. B. NFC, Licht, Distanz) mit digitalen Rätseln auf einer Webseite zu kombinieren. Die Sensorwerte werden in einer Datenbank gespeichert und von der Webseite regelmässig überprüft.
+
+---
+
+### 1. Vorbereitung der Datenbank
+
+Erstelle in deiner MySQL-Datenbank zwei Tabellen:
+
+**Schachdaten**: Für die Echtzeitwerte der Sensoren.
+
+**sensordata**: (optional) Für allgemeine Tests mit Einfügen, Suchen und Löschen von Werten.
+
+Beispielhafte Spalten für Schachdaten:
+
+sql
+id, nfc, licht, distanz, rotary, zeit
+
+
+---
+
+### 2. Zentrale PHP-Skripte
+
+**db_config.php**
+Legt die Zugangsdaten für die Datenbankverbindung fest (DSN, Benutzername, Passwort, Optionen).
+
+**load.php**
+Dieses Skript wird vom ESP32 oder Raspberry Pi aufgerufen. Es:
+
+ Empfängt JSON-Daten mit den Sensorwerten.
+ Entscheidet, ob ein neuer Eintrag gemacht oder der letzte aktualisiert wird.
+ Speichert die Werte in die Datenbank Schachdaten.
+
+**status_check.php**
+Dieses Skript wird regelmässig von der Webseite aufgerufen. Es:
+
+ Holt den neuesten Eintrag aus Schachdaten.
+ Gibt die Sensorwerte als JSON zurück.
+
+---
+
+### 3. Webseite: HTML & CSS
+
+**index.html**
+Die Hauptseite mit vier Rätseln.
+
+ Zeigt Buttons mit Icons für jedes Rätsel.
+ Zeigt beim Start ein Overlay mit Einführungstext.
+ Bei gelösten Rätseln erscheint ein vierstelliger Code.
+
+**style.css**
+Definiert das visuelle Design: Farben, Layouts, Buttons, Overlay.
+
+---
+
+### 4. Interaktivität: JavaScript
+
+**script.js**
+Wird beim Laden der Seite gestartet.
+
+ Ruft regelmässig status_check.php auf.
+ Vergleicht die Sensorwerte mit den erwarteten Bedingungen.
+ Aktualisiert die Anzeige (✔/✖ + Farbkreis) bei jedem Button.
+ Wenn alle vier Rätsel korrekt gelöst sind, erscheint der Code.
+
+---
+
+### 5. Zusatzseite: website_form.php
+
+Eine einfache Testseite zur Interaktion mit der Datenbank sensordata.
+
+ Ermöglicht manuelles Einfügen, Löschen und Suchen von Werten.
+ Zeigt die Daten auch als JSON an.
+ Diese Seite dient zur Entwicklung und zum Debuggen.
+
+---
+
+### 6. Projektstruktur (vereinfacht)
+
+```plaintext
+Projektordner/
+│
+├── index.html
+├── style.css
+├── script.js
+│
+├── php/
+│   ├── db_config.php
+│   ├── load.php
+│   └── status_check.php
+│
+├── website_form.php
+├── Assets/
+│   ├── Springer.png
+│   ├── Laeufer.png
+│   ├── Bauer.png
+│   └── Turm.png
+│
+└── html/
+    ├── raetsel1.html
+    ├── raetsel2.html
+    ├── raetsel3.html
+    └── raetsel4.html
+```
+
+---
+
+### 7. Hinweise
+
+ Die Sensorwerte müssen korrekt benannt sein (z. B. "nfc", "licht", "distanz", "rotary").
+ Alle Server-Skripte benötigen Zugriff auf db_config.php.
+ Achte auf korrekte JSON-Struktur beim Senden von Daten.
+ Regelmässige Datenbankabfragen durch das Frontend ermöglichen Live-Feedback.
+
 
 
 Merken für Carina:
