@@ -10,6 +10,7 @@
 <body>
   <header>
     <h1>Schachmatt</h1>
+    <div id="info-button" title="Willkommensnachricht anzeigen">?</div>
   </header>
 
   <!-- ... -->
@@ -63,7 +64,7 @@
     </div>
   </footer>
 
-<!-- Nur in index.html einfügen -->
+
 <div id="intro-overlay">
   <div id="intro-content" class="intro-content">
     <p>
@@ -117,6 +118,17 @@
   });
 </script>
 
+<script>
+  // Fragezeichen-Klick zeigt das Intro-Overlay
+  document.getElementById("info-button").addEventListener("click", function () {
+    document.getElementById("intro-overlay").style.display = "flex";
+  });
+
+  // Schliessen-Button versteckt das Overlay
+  document.getElementById("intro-close-btn").addEventListener("click", function () {
+    document.getElementById("intro-overlay").style.display = "none";
+  });
+</script>
 
 
 </body>
