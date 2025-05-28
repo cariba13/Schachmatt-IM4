@@ -1,4 +1,4 @@
-# PROJEKT DOKUMENTATION - SCHACHMATT
+# PROJEKTDOKUMENTATION - SCHACHMATT
 
 ## Inhaltsverzeichnis
 
@@ -106,9 +106,11 @@ Vor der technischen Umsetzung des Projekts haben wir ein Screenflow des gesamten
 ## Steckplan
 
 Beim ersten ESP32 schlossen wir den Distanzsensor und den Lichtsensor an. Den Distanzsensor schlossen wir an den 3 Volt an und erdeten den Sensor. Dann schlossen wir noch die Datenübermittlung/Kommunikation über SDA und SCL an. Dies funktioniert über die Ports 4 und 5 auf dem ESP32. Der Lichtsensor benötigt nur ein Kabel für die Datenübertragung. Dieses belegt Port 6 des Microcontrollers. Hier noch das Bild unseres Microcontrollers mit allen Anschlüssen.
+
 ![Steckplan des ersten ESP32](/Bilder%20für%20Dokumentation/esp32_distanzsensor_lichtsensor.jpg)
 
 Beim zweiten ESP32 sind der Drehregler und der NFC-Reader angehängt. Wie bereits erwähnt braucht der NFC-Reader eine SDA und SCL Kommunikation und ist daher auf den Ports 4 und 5 angeschlossen. Dazu natürlich wieder eine Stromversorgung und eine Erdung. Der Drehregler ist am Port 6 angeschlossen und natürlich ebenfalls mit Strom versogt und geerdet. Alle Sensoren sind für eine gängigere Handhabung mit Verlängerungen versehen. Dies könnte jedoch zu Wackelkontakten und bei defekten Kabeln, zu Fehlern führen. 
+
 ![Steckplan des zweiten ESP32](/Bilder%20für%20Dokumentation/esp32_distanzsensor_lichtsensor.jpg)
 
 Learnings: Die ganze Verkabelung der Microcontroller mit den Sensoren stellte uns immer wieder vor Herausforderungen. Teilweise dauerte es sogar einen halben Tag voller Frustration und Fehlersuche, bis bemerkt wurde, dass ein Kabel einfach nicht funktionierte. Da beim Drehregler die Kabel selbst nicht gut an der Verbindung halten, haben wir diese dort angelötet. So haben wir Fehler bei der physischen Verbindung minimiert. Jedoch ist der Regler nicht mehr so modular und somit auch nicht so einfach austauschbar, falls der Sensor kaputt gehen sollte. Dann müssten wir die Kabel auch ersetzen. Das Verkabeln bereitete uns jedoch auch sehr viel Freude. Das phsyische Herumtüfteln und Umstecken ist sehr erfüllend, vor allem in Verbindung mit einem am Schluss funktionierenden Microcontroller und funktionierenden Sensoren.
@@ -116,13 +118,17 @@ Learnings: Die ganze Verkabelung der Microcontroller mit den Sensoren stellte un
 ## Umsetzung
 
 **Entwicklungsprozess**
+
 Anfänglich war die Idee relativ schnell gegeben, dass wir ein Geocache machen wollten. Auch die Idee von mehreren Sensoren für die Öffnung des Geocaches bestand ziemlich früh. Damals wollten wir zur Öffnung des Geocaches also des Logbuchs noch den Drehmotor verwenden. Diese Idee verwarfen wir jedoch, da wir mit den vier Sensoren schon genug zu tun hatten. Ausserdem würde es dann keinen Sinn mehr ergeben, wieso man aus den Rätseln Zahlen erhält. Die Idee die ganze Geschichte in der Thematik Schach zu gestalten, kam erst später aber verleiht dem Ganzen eine schöne vereinende Story. Wir erstellten eine Projektübersicht und ein Screenflow, wie alles funktionieren könnte. Danach kreierten wir ein Mockup für die Webseite, also wie diese aussehen könnte. Ein erstes ganz simples Design welches vor allem für die Usability gedacht war, wurde verworfen, beziehungsweise weiterentwickelt und designt. Dieses Design haben wir schlussendlich ziemlich genau so umgesetzt.
 
 **Verworfene Lösungsansätze**
+
 Nicht alle Ideen welche wir ursprünglich hatten, waren schlussendlich auch umsetzbar und haben es in das finale Projekt geschafft. Ruhet in Frieden ihr Gedankenblitze, Designideen und kreativen Hirngespinste. Darunter war unter anderem der vorhin erwähnte Drehmotor oder auch die Idee alle Sensoren an einem einzigen ESP32 anzuhängen. Wir hatten auch die Idee in der Datenbank immer neue Einträge zu generieren, so dass überprüft werden muss ob jeweils der letzte Eintrag alle Bedingungen erfüllt. So hatten wir während dem testen am Anfang teilweise um die 300 Zeilen in unserer Datenbank und verloren auch ab und zu den Überblick. Die Daten als update in die Datenbank zu schreiben war hier die intelligentere und einfachere Lösung. Nun musste nur noch eine "Session" erstellt werden damit die Lösung beziehungsweise die falschen Lösungen nicht in der Webseite erhalten blieben. So wird nun bei 15 Minuten ohne neue Daten die Zeile nicht mehr geupdatet, sondern bei der nächsten Sensoränderung wird eine neue Zeile/Session erstellt.
 
 **Design**
+
 Speziell bei unserem Projekt ist die visuelle Gestaltung des Ganzen. Und dabei ist nicht nur das digitale sondern vor allem auch das physische gemeint. Da wir ein Schachbrett mit eingebauten Sensoren und modifizierten Schachfiguren benötigen, kamen wir nicht um grosse Bastellstunden herum. (Was für uns auch kein Problem sondern eher Freude bedeutete.) Für einen ersten Prototypen der jedoch schon voll ausgestaltet ist und alle Details beachtet wurde, verwendeten wir eine Styroporplatte als Schachbrettunterlage und darüber ein ausgedrucktes Blatt. Dieses stellte uns vor die nächste Problematik, dass wir dann den Lichtsensor neu kalibrieren musste, da nun weniger Licht vorhanden war. Dies änderte sich nochmals als wir unser Blatt upgradeten und es laminierten. Dies machte das Ganze noch schöner und verlieh dem Schachspiel mit dem Glanz des Plastiks einen edleren Touch. Doch kein Idee wahrt lange und schon war das laminierte A3 Blatt, für welches wir extra die Bibliothek der FHGR kontaktierten und zu anderen Standorten fuhren schon wieder verworfen und durch ein Fliesschachbrett ersetzt. Dieses vereinfachte uns die Integration der anderen Sensoren.
+
 ![Das Schachbrett während dem Arbeitsprozess](/Bilder%20für%20Dokumentation/arbeitsprozess.jpg)
 
 
