@@ -123,9 +123,11 @@ Die ganze Verkabelung der Microcontroller mit den Sensoren stellte uns immer wie
 
 Anfänglich war die Idee relativ schnell gegeben, dass wir ein Geocache machen wollten. Auch die Idee von mehreren Sensoren für die Öffnung des Geocaches bestand ziemlich früh. Damals wollten wir zur Öffnung des Geocaches also des Logbuchs noch den Drehmotor verwenden. Diese Idee verwarfen wir jedoch, da wir mit den vier Sensoren schon genug zu tun hatten. Ausserdem würde es dann keinen Sinn mehr ergeben, wieso man aus den Rätseln Zahlen erhält. Die Idee die ganze Geschichte in der Thematik Schach zu gestalten, kam erst später aber verleiht dem Ganzen eine schöne vereinende Story. Wir erstellten eine Projektübersicht und ein Screenflow, wie alles funktionieren könnte. Danach kreierten wir ein Mockup für die Webseite, also wie diese aussehen könnte. Ein erstes ganz simples Design welches vor allem für die Usability gedacht war, wurde verworfen, beziehungsweise weiterentwickelt und designt. Dieses Design haben wir schlussendlich ziemlich genau so umgesetzt.
 
+
 **Verworfene Lösungsansätze**
 
 Nicht alle Ideen welche wir ursprünglich hatten, waren schlussendlich auch umsetzbar und haben es in das finale Projekt geschafft. Ruhet in Frieden ihr Gedankenblitze, Designideen und kreativen Hirngespinste. Darunter war unter anderem der vorhin erwähnte Drehmotor oder auch die Idee alle Sensoren an einem einzigen ESP32 anzuhängen. Wir hatten auch die Idee in der Datenbank immer neue Einträge zu generieren, so dass überprüft werden muss ob jeweils der letzte Eintrag alle Bedingungen erfüllt. So hatten wir während dem testen am Anfang teilweise um die 300 Zeilen in unserer Datenbank und verloren auch ab und zu den Überblick. Die Daten als update in die Datenbank zu schreiben war hier die intelligentere und einfachere Lösung. Nun musste nur noch eine "Session" erstellt werden damit die Lösung beziehungsweise die falschen Lösungen nicht in der Webseite erhalten blieben. So wird nun bei 15 Minuten ohne neue Daten die Zeile nicht mehr geupdatet, sondern bei der nächsten Sensoränderung wird eine neue Zeile/Session erstellt.
+
 
 **Design**
 
@@ -156,7 +158,7 @@ id, nfc, licht, distanz, rotary, zeit
 
 ---
 
-**2. Zentrale PHP-Skripte**
+### 2. Zentrale PHP-Skripte
 
 db_config.php
 Legt die Zugangsdaten für die Datenbankverbindung fest (DSN, Benutzername, Passwort, Optionen).
@@ -168,7 +170,7 @@ Dieses Skript wird vom ESP32 oder Raspberry Pi aufgerufen. Es:
 - Entscheidet, ob ein neuer Eintrag gemacht oder der letzte aktualisiert wird.
 - Speichert die Werte in die Datenbank Schachdaten.
 
-### status_check.php
+**status_check.php**
 Dieses Skript wird regelmässig von der Webseite aufgerufen. Es:
 
 - Holt den neuesten Eintrag aus Schachdaten.
@@ -176,16 +178,16 @@ Dieses Skript wird regelmässig von der Webseite aufgerufen. Es:
 
 ---
 
-## 3. Webseite: HTML & CSS
+### 3. Webseite: HTML & CSS
 
-### index.html
+**index.html**
 Die Hauptseite mit vier Rätseln.
 
 - Zeigt Buttons mit Icons für jedes Rätsel.
 - Zeigt beim Start ein Overlay mit Einführungstext.
 - Bei gelösten Rätseln erscheint ein vierstelliger Code.
 
-### style.css
+**style.css**
 Definiert das visuelle Design: Farben, Layouts, Buttons, Overlay.
 
 ---
