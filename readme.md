@@ -139,6 +139,12 @@ Speziell bei unserem Projekt ist die visuelle Gestaltung des Ganzen. Und dabei i
 
 ![Das Schachbrett während dem Arbeitsprozess](/Bilder%20für%20Dokumentation/arbeitsprozess.jpg)
 
+
+<br>
+
+**Einsatz von KI**
+
+Wir bedanken uns an dieser Stelle ganz herzlich bei ChatGPT sprich OpenAi. Ohne diese KI wäre unser Projekt nie zu dem geworden was es heute ist. Ob beim Finden von Fehlern im Code oder auch beim Erklären von gewissen Funktionen und Abläufen konnten wir immer auf ChatGPT zurückgreifen. Auch für das Aufräumen des Codes war die KI sehr nützlich, da wir irgendwann die Übersicht verloren haben, da wir häufig den Code von ChatGPT adaptierten und modifizierten und 5 mal umbauten, so dass am Schluss genau das herauskam, was wir wollten. Jedoch halfen die direkte Hilfe von Jasper, Jan, Siro oder Beni meist effektiver und direkter. Die vier sind jedoch nicht so künstlich intelligent, sondern eher real intelligent. Ein grosses Danke nochmals für die Hilfe und Geduld welche sie immer für uns aufbringen. 
 ---
 
 ## Anleitung zum Nachbauen
