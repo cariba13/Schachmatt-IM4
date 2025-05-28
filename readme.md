@@ -7,7 +7,7 @@
 3. [Screenflow/Flussdiagramm](#Screenflow)
 4. [Steckplan](#Steckplan)  
 5. [Umsetzung](#Umsetzung)  
-6. [Kapitel 3](#Kapitel-3)  
+6. [Anleitung zum Nachbauen](#Anleitung)  
 
 
 ## Projektbeschreibung
@@ -132,6 +132,121 @@ Nicht alle Ideen welche wir ursprünglich hatten, waren schlussendlich auch umse
 Speziell bei unserem Projekt ist die visuelle Gestaltung des Ganzen. Und dabei ist nicht nur das digitale sondern vor allem auch das physische gemeint. Da wir ein Schachbrett mit eingebauten Sensoren und modifizierten Schachfiguren benötigen, kamen wir nicht um grosse Bastellstunden herum. (Was für uns auch kein Problem sondern eher Freude bedeutete.) Für einen ersten Prototypen der jedoch schon voll ausgestaltet ist und alle Details beachtet wurde, verwendeten wir eine Styroporplatte als Schachbrettunterlage und darüber ein ausgedrucktes Blatt. Dieses stellte uns vor die nächste Problematik, dass wir dann den Lichtsensor neu kalibrieren musste, da nun weniger Licht vorhanden war. Dies änderte sich nochmals als wir unser Blatt upgradeten und es laminierten. Dies machte das Ganze noch schöner und verlieh dem Schachspiel mit dem Glanz des Plastiks einen edleren Touch. Doch kein Idee wahrt lange und schon war das laminierte A3 Blatt, für welches wir extra die Bibliothek der FHGR kontaktierten und zu anderen Standorten fuhren schon wieder verworfen und durch ein Fliesschachbrett ersetzt. Dieses vereinfachte uns die Integration der anderen Sensoren.
 
 ![Das Schachbrett während dem Arbeitsprozess](/Bilder%20für%20Dokumentation/arbeitsprozess.jpg)
+
+### Anleitung zum Nachbauen
+
+Diese Anleitung beschreibt in vereinfachter Form, wie du das Schachrätsel-Webprojekt mit physischer Eingabe umsetzen kannst. Ziel ist es, physische Sensorwerte (z. B. NFC, Licht, Distanz) mit digitalen Rätseln auf einer Webseite zu kombinieren. Die Sensorwerte werden in einer Datenbank gespeichert und von der Webseite regelmässig überprüft.
+
+---
+
+## 1. Vorbereitung der Datenbank
+
+Erstelle in deiner MySQL-Datenbank zwei Tabellen:
+
+- **`Schachdaten`**: Für die Echtzeitwerte der Sensoren.
+- **`sensordata`**: Für allgemeine Tests mit Einfügen, Suchen und Löschen von Werten.
+
+Beispielhafte Spalten für `Schachdaten`:
+
+```sql
+id, nfc, licht, distanz, rotary, zeit
+```
+
+---
+
+## 2. Zentrale PHP-Skripte
+
+### `db_config.php`
+Legt die Zugangsdaten für die Datenbankverbindung fest (DSN, Benutzername, Passwort, Optionen).
+
+### `load.php`
+Dieses Skript wird vom ESP32 oder Raspberry Pi aufgerufen. Es:
+
+- Empfängt JSON-Daten mit den Sensorwerten.
+- Entscheidet, ob ein neuer Eintrag gemacht oder der letzte aktualisiert wird.
+- Speichert die Werte in die Datenbank `Schachdaten`.
+
+### `status_check.php`
+Dieses Skript wird regelmässig von der Webseite aufgerufen. Es:
+
+- Holt den neuesten Eintrag aus `Schachdaten`.
+- Gibt die Sensorwerte als JSON zurück.
+
+---
+
+## 3. Webseite: HTML & CSS
+
+### `index.html`
+Die Hauptseite mit vier Rätseln.
+
+- Zeigt Buttons mit Icons für jedes Rätsel.
+- Zeigt beim Start ein Overlay mit Einführungstext.
+- Bei gelösten Rätseln erscheint ein vierstelliger Code.
+
+### `style.css`
+Definiert das visuelle Design: Farben, Layouts, Buttons, Overlay.
+
+---
+
+## 4. Interaktivität: JavaScript
+
+### `script.js`
+Wird beim Laden der Seite gestartet.
+
+- Ruft regelmässig `status_check.php` auf.
+- Vergleicht die Sensorwerte mit den erwarteten Bedingungen.
+- Aktualisiert die Anzeige (✔/✖ + Farbkreis) bei jedem Button.
+- Wenn alle vier Rätsel korrekt gelöst sind, erscheint der Code.
+
+---
+
+## 5. Zusatzseite: `website_form.php`
+
+Eine einfache Testseite zur Interaktion mit der Datenbank `sensordata`.
+
+- Ermöglicht manuelles Einfügen, Löschen und Suchen von Werten.
+- Zeigt die Daten auch als JSON an.
+- Diese Seite dient zur Entwicklung und zum Debuggen.
+
+---
+
+## 6. Projektstruktur (vereinfacht)
+
+```plaintext
+Projektordner/
+│
+├── index.html
+├── style.css
+├── script.js
+│
+├── php/
+│   ├── db_config.php
+│   ├── load.php
+│   └── status_check.php
+│
+├── website_form.php
+├── Assets/
+│   ├── Springer.png
+│   ├── Laeufer.png
+│   ├── Bauer.png
+│   └── Turm.png
+│
+└── html/
+    ├── raetsel1.html
+    ├── raetsel2.html
+    ├── raetsel3.html
+    └── raetsel4.html
+```
+
+---
+
+## 7. Hinweise
+
+- Die Sensorwerte müssen korrekt benannt sein (z. B. `"nfc"`, `"licht"`, `"distanz"`, `"rotary"`).
+- Alle Server-Skripte benötigen Zugriff auf `db_config.php`.
+- Achte auf korrekte JSON-Struktur beim Senden von Daten.
+- Regelmässige Datenbankabfragen durch das Frontend ermöglichen Live-Feedback.
+
 
 
 Merken für Carina:
