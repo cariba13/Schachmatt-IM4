@@ -92,8 +92,8 @@ Hardware-Setup
 
 | Komponente       | Anschluss ESP32 |
 |------------------|-----------------|
-| Rotary Encoder A | GPIO 2 (ENC_A)  |
-| Rotary Encoder B | GPIO 3 (ENC_B)  |
+| Drehregler       | SDA: GPIO 4  |
+|                  | SCL: GPIO 5  |
 
 
 Der Drehregler (Rotary Encoder) wurde eingesetzt, um eine Drehung einer Figur in ein Signal umzuwandeln. Er erkennt Drehbewegungen nach links oder rechts und gibt dabei eine definierte Position aus. Diese Position wird getrackt und nach ca. 5 Sekunden ohne weitere Bewegung an den Server übermittelt beziehungsweise in die Datenbank geschrieben. Wenn die Bedingung erfüllt ist und der Drehregler einer der richtigen Werte ausgibt, zählt das Rätsel als gelöst. Wir haben die Bedingung beziehungsweise die Werte welche in der Datenbank stehen müssen damit das Rätsel als gelöst gilt einigermassen breit definiert, so dass nicht genau eine Stellung zur Lösung des Rätsels führt, sondern mehrere welche etwa gleich sind wie die Lösung welche wir wollen. Dies bietet Raum für kleine Ungenauigkeiten. Der Drehregler hat zuverlässig funktioniert, jedoch mussten wir aufgrund schlechter Steckverbindungen die Kabel direkt anlöten. Dies führte zu einer stabileren Verbindung, schränkte jedoch die Modularität ein. Auch bei diesem Sensor wird der Status alle 5 Sekunden an den Server gesendet.
@@ -113,7 +113,9 @@ Beim zweiten ESP32 sind der Drehregler und der NFC-Reader angehängt. Wie bereit
 
 ![Steckplan des zweiten ESP32](/Bilder%20für%20Dokumentation/esp32_distanzsensor_lichtsensor.jpg)
 
-Learnings: Die ganze Verkabelung der Microcontroller mit den Sensoren stellte uns immer wieder vor Herausforderungen. Teilweise dauerte es sogar einen halben Tag voller Frustration und Fehlersuche, bis bemerkt wurde, dass ein Kabel einfach nicht funktionierte. Da beim Drehregler die Kabel selbst nicht gut an der Verbindung halten, haben wir diese dort angelötet. So haben wir Fehler bei der physischen Verbindung minimiert. Jedoch ist der Regler nicht mehr so modular und somit auch nicht so einfach austauschbar, falls der Sensor kaputt gehen sollte. Dann müssten wir die Kabel auch ersetzen. Das Verkabeln bereitete uns jedoch auch sehr viel Freude. Das phsyische Herumtüfteln und Umstecken ist sehr erfüllend, vor allem in Verbindung mit einem am Schluss funktionierenden Microcontroller und funktionierenden Sensoren.
+**Learnings**
+
+Die ganze Verkabelung der Microcontroller mit den Sensoren stellte uns immer wieder vor Herausforderungen. Teilweise dauerte es sogar einen halben Tag voller Frustration und Fehlersuche, bis bemerkt wurde, dass ein Kabel einfach nicht funktionierte. Da beim Drehregler die Kabel selbst nicht gut an der Verbindung halten, haben wir diese dort angelötet. So haben wir Fehler bei der physischen Verbindung minimiert. Jedoch ist der Regler nicht mehr so modular und somit auch nicht so einfach austauschbar, falls der Sensor kaputt gehen sollte. Dann müssten wir die Kabel auch ersetzen. Das Verkabeln bereitete uns jedoch auch sehr viel Freude. Das phsyische Herumtüfteln und Umstecken ist sehr erfüllend, vor allem in Verbindung mit einem am Schluss funktionierenden Microcontroller und funktionierenden Sensoren.
 
 ## Umsetzung
 
