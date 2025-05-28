@@ -56,6 +56,7 @@
 }
 
 body {
+  font-family: 'Montserrat', sans-serif;
   background: linear-gradient(to bottom, var(--dunkelbraun), var(--hellgrau));
   display: flex;
   flex-direction: column;
@@ -283,7 +284,21 @@ footer {
   margin: 1rem 0;
 }
 
-#popup {
+.popup-content {
+  font-size: clamp(1rem, 15vw, 1.5rem);
+  color: #333;
+  max-width: 100%;
+  line-height: 1.4;
+  padding: 2rem;
+  border-radius: 1rem;
+  text-align: center;
+}
+
+.hidden {
+  display: none;
+}
+
+.popupShow {
   display: flex;
   gap: 1rem;
   justify-content: center;
@@ -302,20 +317,6 @@ footer {
   flex-wrap: nowrap;
   flex-direction: column;
   text-align: center;
-}
-
-.popup-content {
-  font-size: clamp(1rem, 15vw, 1.5rem);
-  color: #333;
-  max-width: 95%;
-  line-height: 1.4;
-  padding: 2rem;
-  border-radius: 1rem;
-  text-align: center;
-}
-
-.hidden {
-  display: none;
 }
 
 
