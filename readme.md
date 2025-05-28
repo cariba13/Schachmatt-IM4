@@ -151,7 +151,7 @@ Speziell bei unserem Projekt ist die visuelle Gestaltung des Ganzen. Und dabei i
 
 **Zukunft des Geocaches**
 
-nur prototyp (z.B. auch noch nicht regengeschützt) daher noch wirkliche umsetzung warscheinlich bei carina im garten weil dort strom und wlan ansonsten braucht es kleine solarpanele und kleine akkus um das ganze zu betreiben wlan momentan nur mit testwlan tinkergarden welches wir in der schule extra aufgesetzt haben. dies müsste man im code anpassen wenn sich dies dann ändert. diese 2 limitierungen wlan und strom sind die einzigen die wir haben, 
+Dieser Geocache ist wie vorhin erwähnt nur ein Prototyp (er ist z.B. auch noch nicht wasserfest/regengeschützt und man sieht z.B. auch den Distanzsensor noch sehr gut.) Die wirkliche Umsetzung wird mit grosser Wahrscheinlichkeit bei Carina im Garten stattfinden, da dort Strom vorhanden ist und auch das Wlan bis dort reicht. Aktuell braucht es auch noch das tinkergarden Wlan welches wir in der Schule extra aufgesetzt haben. Dies ist bei einer zukünftigen Verwendung dann noch anzupassen. Man könnte das ganze Projekt auch mit einem eigenen Router versehen und dann die kabelgebundene Stromzufuhr durch Solarpanele und kleine Akkus ersetzen um ein komplett modulares und überall einsetzbares Projekt zu haben. Dies ist ja eigentlich aber auch nicht Sinn und Zweck eines Geocaches. Die zwei Limitierungen Wland und Strom sind momentan die einzigen welche in unserem Projekt vorzufinden sind.
 
 
 <br>
