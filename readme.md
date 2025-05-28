@@ -48,7 +48,19 @@ Hardware-Setup
 | Rotary Encoder B | GPIO 3 (ENC_B)  |
 
 
+### Kapitel 0
 
+Screenflow/Flussdiagram:
+Vor der technischen Umsetzung des Projekts haben wir ein Screenflow des gesamten Projekts erstellt. Dieser ist im Figma ersichtlich https://www.figma.com/design/QBwLGvlgNTSYOOGi4WRb6m/IM4-MockUp?node-id=71-450&t=LwzLWQJTbZL3t7zy-1. Dieser Screenflow zeigt den ganzen Prozess auf, welcher durchlaufen wird damit alles richtig funktioniert und die richtige Logik hat.
+
+Steckschema:
+How to: Beim ersten ESP32 schlossen wir den Distanzsensor und den Lichtsensor an. Den Distanzsensor schlossen wir an den 3 Volt an und erdeten den Sensor. Dann schlossen wir noch die Datenübermittlung/Kommunikation über SDA und SCL an. Dies funktioniert über die Ports 4 und 5 auf dem ESP32. Der Lichtsensor benötigt nur ein Kabel für die Datenübertragung. Dieses belegt Port 6 des Microcontrollers. Hier noch das Bild unseres Microcontrollers mit allen Anschlüssen.
+[Steckplan des ersten ESP32](/Bilder%20für%20Dokumentation/esp32_distanzsensor_lichtsensor.jpg)
+
+Beim zweiten ESP32 sind der Drehregler und der NFC-Reader angehängt. Wie bereits erwähnt braucht der NFC-Reader eine SDA und SCL Kommunikation und ist daher auf den Ports 4 und 5 angeschlossen. Dazu natürlich wieder eine Stromversorgung und eine Erdung. Der Drehregler ist am Port 6 angeschlossen und natürlich ebenfalls mit Strom versogt und geerdet. Alle Sensoren sind für eine gängigere Handhabung mit Verlängerungen versehen. Dies könnte jedoch zu Wackelkontakten und bei defekten Kabeln, zu Fehlern führen. 
+[Steckplan des zweiten ESP32](/Bilder%20für%20Dokumentation/esp32_distanzsensor_lichtsensor.jpg)
+
+Learnings: Die ganze Verkabelung der Microcontroller mit den Sensoren stellte uns immer wieder vor Herausforderungen. Teilweise dauerte es sogar einen halben Tag voller Frustration und Fehlersuche, bis bemerkt wurde, dass ein Kabel einfach nicht funktionierte. Da beim Drehregler die Kabel selbst nicht gut an der Verbindung halten, haben wir diese dort angelötet. So haben wir Fehler bei der physischen Verbindung minimiert. Jedoch ist der Regler nicht mehr so modular und somit auch nicht so einfach austauschbar, falls der Sensor kaputt gehen sollte. Dann müssten wir die Kabel auch ersetzen. Das Verkabeln bereitete uns jedoch auch sehr viel Freude. Das phsyische Herumtüfteln und Umstecken ist sehr erfüllend, vor allem in Verbindung mit einem am Schluss funktionierenden Microcontroller und funktionierenden Sensoren.
 
 
 Merken für Carina:
