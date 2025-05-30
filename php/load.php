@@ -11,7 +11,7 @@ try {
     exit;
 }
 
-// Eingehende JSON-Daten lesen
+// Eingehende JSON-Daten lesen ------------------------------------------------------------------------
 $inputJSON = file_get_contents('php://input');
 $input = json_decode($inputJSON, true);
 
@@ -19,8 +19,11 @@ if (json_last_error() !== JSON_ERROR_NONE || empty($input)) {
     echo json_encode(["status" => "error", "message" => "Invalid JSON input"]);
     exit;
 }
+// ----------------------------------------------------------------------------------------------------
 
-// Eingabewerte extrahieren
+
+
+// Eingabewerte extrahieren ---------------------------------------------------------------------------
 $columns = ['nfc', 'licht', 'distanz', 'rotary'];
 $updateFields = [];
 $updateValues = [];
@@ -32,8 +35,11 @@ foreach ($columns as $column) {
         $updateValues[] = $input[$column];
     }
 }
+// ----------------------------------------------------------------------------------------------------
 
-// Letzten Datensatz holen
+
+
+// Letzten Datensatz holen ----------------------------------------------------------------------------
 $sql = "SELECT * FROM Schachdaten ORDER BY id DESC LIMIT 1";
 $stmt = $pdo->prepare($sql);
 $stmt->execute();
@@ -64,4 +70,6 @@ if (!$lastRow || $intervalSeconds > 900) { // 15 Minuten = 900 Sekunden
         echo "Keine Änderungen vorgenommen.";
     }
 }
+// ----------------------------------------------------------------------------------------------------
+
 ?>

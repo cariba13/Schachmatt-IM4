@@ -1,4 +1,4 @@
-// === Popup-Steuerung ===
+// === Popup-Steuerung ==================================================================================
 
 // Funktion zum Anzeigen des Popups
 function showPopup() {
@@ -24,7 +24,12 @@ function closePopup() {
   }
 }
 
-// === RÄTSEL 1: ROTARY – Wert muss zwischen 15 und 19 liegen ===
+// ======================================================================================================
+
+
+
+
+// === RÄTSEL 1: ROTARY – Wert muss zwischen 15 und 19 liegen ===========================================
 async function checkRotaryStatus() {
   const res = await fetch("../php/status_check.php");  // Holt Statusdaten vom Server
   const data = await res.json();
@@ -40,8 +45,12 @@ async function checkRotaryStatus() {
     closePopup();
   }
 }
+// ======================================================================================================
 
-// === RÄTSEL 2: LICHT – Wert muss genau 1 sein ===
+
+
+
+// === RÄTSEL 2: LICHT – Wert muss genau 1 sein =========================================================
 async function checkLichtStatus() {
   const res = await fetch("../php/status_check.php");
   const data = await res.json();
@@ -56,8 +65,12 @@ async function checkLichtStatus() {
     closePopup();
   }
 }
+// ======================================================================================================
 
-// === RÄTSEL 3: NFC – Wert muss exakt "FF0F53DE3F0000" sein ===
+
+
+
+// === RÄTSEL 3: NFC – Wert muss exakt "FF0F53DE3F0000" sein ============================================
 async function checkNfcStatus() {
   const res = await fetch("../php/status_check.php");
   const data = await res.json();
@@ -72,8 +85,12 @@ async function checkNfcStatus() {
     closePopup();
   }
 }
+// ======================================================================================================
 
-// === RÄTSEL 4: DISTANZ – Muss zwischen 0 und 75 liegen (75 ausgeschlossen) ===
+
+
+
+// === RÄTSEL 4: DISTANZ – Muss zwischen 0 und 75 liegen (75 ausgeschlossen) ============================
 async function checkDistanzStatus() {
   const res = await fetch("../php/status_check.php");
   const data = await res.json();
@@ -88,3 +105,4 @@ async function checkDistanzStatus() {
     closePopup();
   }
 }
+// ======================================================================================================
