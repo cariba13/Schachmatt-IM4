@@ -88,13 +88,3 @@ async function checkDistanzStatus() {
     closePopup();
   }
 }
-
-// === Hinweis ===
-// Die Funktionen sind definiert, aber aktuell auskommentiert.
-// Um sie zu aktivieren, entferne die Kommentarzeichen:
-
-// checkRotaryStatus();
-// checkLichtStatus();
-// checkNfcStatus();
-// checkDistanzStatus();
-// Diese Funktionen können einzeln aufgerufen werden, um den jeweiligen Status zu prüfen und das Popup anzuzeigen oder zu verstecken.
